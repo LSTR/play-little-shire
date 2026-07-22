@@ -1,0 +1,8 @@
+{
+  "appId": "app.littlemiddleearth",
+  "appName": "Hanna in Middle Earth",
+  "webDir": "dist",
+  "android": {
+    "backgroundColor": "#BFE3F0"
+  }
+}
