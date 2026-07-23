@@ -107,6 +107,17 @@ export default class AscentScene extends Phaser.Scene {
     this.input.on('pointerupoutside', endDrag);
 
     this.eagle = addArt(this, W / 2, -100, 'tok-eagle', 1.1).setDepth(30).setVisible(false);
+
+    this.landDust = this.add.particles(0, 0, 'cloud', {
+      speed: { min: 30, max: 90 },
+      angle: { min: 200, max: 340 },
+      scale: { start: 0.1, end: 0.2 },
+      alpha: { start: 0.55, end: 0 },
+      lifespan: 340,
+      tint: 0xd9c6a0,
+      emitting: false,
+    });
+    this.landDust.setDepth(9);
   }
 
   spawnPlatform(x, y, allowExtras) {
@@ -148,10 +159,24 @@ export default class AscentScene extends Phaser.Scene {
   }
 
   bouncePlatform(plat) {
+    // harder landings (higher fall speed) get a bigger, slightly slower squash
+    const impact = Phaser.Math.Clamp(Math.abs(this.player.vy) / 900, 0.4, 1.1);
     this.player.vy = BOUNCE_VY;
     this.player.y = plat.y - 40;
     sfx.pop();
-    this.tweens.add({ targets: this.playerImg, scaleY: 0.7, scaleX: 1.15, duration: 90, yoyo: true, ease: 'Sine.easeOut' });
+    this.tweens.killTweensOf(this.playerImg);
+    this.tweens.add({
+      targets: this.playerImg,
+      scaleY: 1 - 0.32 * impact,
+      scaleX: 1 + 0.22 * impact,
+      duration: 90 + 40 * impact,
+      yoyo: true,
+      ease: 'Sine.easeOut',
+    });
+    if (!REDUCED_MOTION) {
+      this.landDust.emitParticleAt(this.player.x, plat.y, 5 + Math.round(3 * impact));
+      this.tweens.add({ targets: plat.img, scaleY: 0.82, duration: 80, yoyo: true, ease: 'Sine.easeOut' });
+    }
     if (plat.goblin) {
       const gob = plat.goblin;
       plat.goblin = null;
@@ -229,6 +254,9 @@ export default class AscentScene extends Phaser.Scene {
 
     this.playerImg.setPosition(p.x, p.y);
     if (Math.abs(p.vx) > 20) this.playerImg.scaleX = (p.vx < 0 ? -1 : 1) * Math.abs(this.playerImg.scaleX);
+    // a soft lean into the direction of travel — lerped, never snapped, for an elegant feel
+    const leanTarget = Phaser.Math.Clamp(p.vx * 0.035, -14, 14);
+    this.playerImg.angle = Phaser.Math.Linear(this.playerImg.angle, leanTarget, 0.15);
 
     // keep the ledge chain going above the highest point reached
     while (this.highestY + this.world.y > -100) this.spawnNextPlatform();
