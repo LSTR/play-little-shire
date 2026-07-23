@@ -126,6 +126,11 @@ const dict = {
       desc: 'Cada quien ve la mitad del árbol. ¡Descríbanse lo que ven!',
       how: 'Tú ves tus símbolos, tu compañero ve los suyos.\nDescríbanselos en voz alta\ny toquen los que hacen pareja.\n(2 jugadores, uno frente al otro, ya deben hablar bien)',
     },
+    clearing: {
+      title: 'El Sendero de la Comarca',
+      desc: 'Camina hasta la puerta, esquivando o espantando arañas.',
+      how: 'Arrastra el círculo para caminar.\nToca una araña para espantarla,\no simplemente rodéala.\n¡Llega hasta la puerta!\n(1 jugador)',
+    },
     journey: {
       title: 'El Gran Viaje',
       desc: 'Un juego de mesa hasta la Montaña Solitaria.',
@@ -293,6 +298,11 @@ const dict = {
       title: 'The Tree of Secrets',
       desc: "You each see half the tree. Describe what you see to each other!",
       how: "You see your symbols, your partner sees theirs.\nDescribe them out loud\nand tap the ones that match.\n(2 players, face to face, needs some talking)",
+    },
+    clearing: {
+      title: 'The Shire Path',
+      desc: 'Walk to the gate, dodging or shooing spiders along the way.',
+      how: 'Drag the circle to walk.\nTap a spider to shoo it away,\nor just walk around it.\nReach the gate!\n(1 player)',
     },
     journey: {
       title: 'The Great Journey',

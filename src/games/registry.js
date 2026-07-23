@@ -14,4 +14,5 @@ export const GAMES = [
   { id: 'shire', scene: 'Shire', icon: 'tok-spider', color: 0x5d4a7e, status: 'ready', minAge: 5 },
   { id: 'beacons', scene: 'Beacons', icon: 'tok-mountain', color: 0xc2622a, status: 'ready', minAge: 5 },
   { id: 'secrettree', scene: 'SecretTree', icon: 'tok-tree', color: 0x3f9e6b, status: 'ready', minAge: 7 },
+  { id: 'clearing', scene: 'Clearing', icon: 'gate', color: 0x466b3e, status: 'ready', minAge: 5 },
 ];

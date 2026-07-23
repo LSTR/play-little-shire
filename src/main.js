@@ -16,6 +16,7 @@ import TreasureScene from './games/treasure/TreasureScene.js';
 import ShireScene from './games/shire/ShireScene.js';
 import BeaconsScene from './games/beacons/BeaconsScene.js';
 import SecretTreeScene from './games/secrettree/SecretTreeScene.js';
+import ClearingScene from './games/clearing/ClearingScene.js';
 
 new Phaser.Game({
   type: Phaser.AUTO,
@@ -45,6 +46,7 @@ new Phaser.Game({
     ShireScene,
     BeaconsScene,
     SecretTreeScene,
+    ClearingScene,
     WinScene,
   ],
 });
