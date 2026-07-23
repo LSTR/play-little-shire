@@ -69,15 +69,22 @@ marcar aquí.
 
 ## Otras ideas implementadas (fuera del backlog original)
 
-- ✅ **El Sendero de la Comarca** — IMPLEMENTADO 2026-07-22 (`src/games/clearing/ClearingScene.js`,
-  escena `Clearing`). Primer juego de movimiento libre del catálogo (los demás son de toques o
-  turnos): joystick virtual fijo abajo a la izquierda, un jugador camina desde abajo hasta la
-  puerta arriba. Arañas dispersas en el camino (mismo arte que Defender la Comarca) — se pueden
-  tocar para espantarlas o simplemente rodearlas caminando, nunca bloquean el paso. Sin reloj,
-  sin derrota posible. Movimiento y colisión hechos a mano (el juego no usa el motor de físicas
-  de Phaser, que no está activado globalmente). Cero arte nuevo. Deep-links dev:
-  `?scene=Clearing&spiders=N`. Si se quiere explorar más este género (mapas más grandes con
-  scroll de cámara, enemigos que persiguen, modo cooperativo), este es el punto de partida.
+- ✅ **El Sendero de la Comarca** — IMPLEMENTADO 2026-07-22, ampliado el mismo día
+  (`src/games/clearing/ClearingScene.js`, escena `Clearing`). Primer juego de movimiento libre
+  del catálogo (los demás son de toques o turnos): joystick virtual fijo abajo a la izquierda,
+  un jugador camina desde abajo hasta la puerta arriba. Dos tipos de criaturas en el camino —
+  arañas quietas y troles que patrullan de lado a lado despacio (mismo arte que Defender la
+  Comarca y El Gran Viaje) — se pueden tocar para espantarlas o simplemente rodearlas caminando,
+  nunca bloquean el paso. Gemas sueltas para juntar caminando encima, con contador arriba. Sin
+  reloj, sin derrota posible. Movimiento y colisión hechos a mano (el juego no usa el motor de
+  físicas de Phaser, que no está activado globalmente). Cero arte nuevo. Deep-links dev:
+  `?scene=Clearing&spiders=N&trolls=N&gems=N`. Evaluamos ir hacia un estilo Mario Bros
+  (plataformas con salto) y se descartó — choca con la pantalla vertical fija, con controles
+  táctiles de precisión, y con la regla de "sin fail states duros" (caídas = muerte instantánea
+  en ese género). El camino elegido fue seguir sumando capas sobre este mismo juego. Si se quiere
+  seguir, las ideas que quedaron sobre la mesa: variedad de enemigos con comportamiento reactivo,
+  corazones compartidos con Defender la Comarca, mundo más grande con scroll de cámara, un jefe
+  final, y varias zonas/niveles en secuencia (bosque → cueva → río).
 
 ## Otras tareas pendientes
 

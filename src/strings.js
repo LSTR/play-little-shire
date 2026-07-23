@@ -128,8 +128,8 @@ const dict = {
     },
     clearing: {
       title: 'El Sendero de la Comarca',
-      desc: 'Camina hasta la puerta, esquivando o espantando arañas.',
-      how: 'Arrastra el círculo para caminar.\nToca una araña para espantarla,\no simplemente rodéala.\n¡Llega hasta la puerta!\n(1 jugador)',
+      desc: 'Camina hasta la puerta, junta gemas y espanta lo que se cruce.',
+      how: 'Arrastra el círculo para caminar.\nToca arañas o troles para espantarlos,\no simplemente rodéalos.\nCamina sobre las gemas para juntarlas.\n¡Llega hasta la puerta!\n(1 jugador)',
     },
     journey: {
       title: 'El Gran Viaje',
@@ -301,8 +301,8 @@ const dict = {
     },
     clearing: {
       title: 'The Shire Path',
-      desc: 'Walk to the gate, dodging or shooing spiders along the way.',
-      how: 'Drag the circle to walk.\nTap a spider to shoo it away,\nor just walk around it.\nReach the gate!\n(1 player)',
+      desc: 'Walk to the gate, collect gems, and shoo away whatever you meet.',
+      how: 'Drag the circle to walk.\nTap spiders or trolls to shoo them away,\nor just walk around them.\nWalk over gems to collect them.\nReach the gate!\n(1 player)',
     },
     journey: {
       title: 'The Great Journey',
