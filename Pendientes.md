@@ -86,6 +86,22 @@ marcar aquí.
   corazones compartidos con Defender la Comarca, mundo más grande con scroll de cámara, un jefe
   final, y varias zonas/niveles en secuencia (bosque → cueva → río).
 
+- ✅ **Escape de las Montañas** — IMPLEMENTADO 2026-07-22 (`src/games/ascent/AscentScene.js`,
+  escena `Ascent`). El pedido explícito era "algo estilo Mario Bros pero de El Hobbit"; en vez del
+  plataformas lateral con salto de precisión (que choca con pantalla vertical fija, controles
+  táctiles y "sin fail states duros"), se adaptó a un trepador vertical estilo Doodle Jump: el
+  personaje rebota solo hacia arriba con gravedad, arrastrar el dedo lo mueve a los lados, sin
+  botón de salto que cronometrar. Plataformas generadas sin fin mientras se sube (cada una a
+  menos de 150px en X de la anterior, para que siempre sea alcanzable). Trolles sobre algunas
+  plataformas se aplastan solos al aterrizar ahí (+1 moneda), gemas sueltas se juntan al pasar
+  cerca. Si te caes de la pantalla, un águila (`tok-eagle`) te rescata y te repone cerca de tu
+  altura — sin penalización, mismo espíritu de "nunca perder" del resto del catálogo. Meta: subir
+  4200px = escapar a la luz. Cero arte nuevo (reutiliza troles, gemas, águila). Durante la
+  construcción se encontraron y corrigieron dos bugs reales: plataformas con X completamente
+  aleatoria podían quedar fuera de alcance del salto (ahora acotadas a la anterior), y el conteo
+  de altura no empezaba a subir hasta cruzar la línea de scroll fija (dejaba ~560px de subida
+  inicial sin contar). Deep-links dev: `?scene=Ascent&goal=N`.
+
 ## Otras tareas pendientes
 
 - **Pase de pulido**: ícono de la app, pantalla de splash para Android, música de fondo

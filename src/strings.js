@@ -131,6 +131,11 @@ const dict = {
       desc: 'Camina hasta la puerta, junta gemas y espanta lo que se cruce.',
       how: 'Arrastra el círculo para caminar.\nToca arañas o troles para espantarlos,\no simplemente rodéalos.\nCamina sobre las gemas para juntarlas.\n¡Llega hasta la puerta!\n(1 jugador)',
     },
+    ascent: {
+      title: 'Escape de las Montañas',
+      desc: 'Rebota de saliente en saliente para escapar de las cuevas hacia la luz.',
+      how: 'Arrastra el dedo para moverte a los lados,\nel personaje rebota solo hacia arriba.\nJunta monedas y aplasta trasgos al aterrizar.\n¿Te caes? ¡Un águila te rescata!\n(1 jugador)',
+    },
     journey: {
       title: 'El Gran Viaje',
       desc: 'Un juego de mesa hasta la Montaña Solitaria.',
@@ -303,6 +308,11 @@ const dict = {
       title: 'The Shire Path',
       desc: 'Walk to the gate, collect gems, and shoo away whatever you meet.',
       how: 'Drag the circle to walk.\nTap spiders or trolls to shoo them away,\nor just walk around them.\nWalk over gems to collect them.\nReach the gate!\n(1 player)',
+    },
+    ascent: {
+      title: 'Mountain Escape',
+      desc: 'Bounce from ledge to ledge to escape the caves and reach the light.',
+      how: 'Drag your finger to move side to side,\nthe character bounces up on its own.\nCollect coins and bonk goblins on landing.\nFall off? An eagle swoops in to save you!\n(1 player)',
     },
     journey: {
       title: 'The Great Journey',
