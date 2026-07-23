@@ -204,7 +204,10 @@ export default class AscentScene extends Phaser.Scene {
       onComplete: () => this.eagle.setVisible(false),
     });
     this.player.y = this.threshold - 60;
-    this.player.vy = BOUNCE_VY * 0.6;
+    // full-strength bounce, not a weaker one — platform gaps (130-190px) already
+    // assume a full BOUNCE_VY's ~240px reach; anything weaker can never close the
+    // gap, so every rescue would just chain into another rescue forever
+    this.player.vy = BOUNCE_VY;
   }
 
   update(time, delta) {
