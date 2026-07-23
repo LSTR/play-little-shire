@@ -85,6 +85,7 @@ export default class MenuScene extends Phaser.Scene {
     this.cardsC = this.add.container(0, 0);
     GAMES.forEach((game, i) => this.cardsC.add(this.makeGameCard(game, W / 2, 572 + i * 154)));
     this.dragDist = 0;
+    this.scrollVel = 0;
     const contentBottom = 572 + (GAMES.length - 1) * 154 + 100;
     this.maxScroll = Math.max(0, contentBottom - H);
     if (this.maxScroll > 0) {
@@ -92,13 +93,41 @@ export default class MenuScene extends Phaser.Scene {
         this.dragStartY = p.y;
         this.cardsStartY = this.cardsC.y;
         this.dragDist = 0;
+        this.scrollVel = 0;
+        this.lastPointerY = p.y;
+        this.lastPointerTime = this.time.now;
       });
       this.input.on('pointermove', (p) => {
         if (!p.isDown || this.dragStartY === undefined) return;
         const dy = p.y - this.dragStartY;
         this.dragDist = Math.max(this.dragDist, Math.abs(dy));
-        this.cardsC.y = Phaser.Math.Clamp(this.cardsStartY + dy, -this.maxScroll, 0);
+        this.cardsC.y = this.rubberBand(this.cardsStartY + dy);
+
+        // light-smoothed velocity sample, so a flick still has momentum on release
+        const dt = this.time.now - this.lastPointerTime;
+        if (dt > 0) {
+          const v = (p.y - this.lastPointerY) / dt;
+          this.scrollVel = this.scrollVel * 0.7 + v * 0.3;
+        }
+        this.lastPointerY = p.y;
+        this.lastPointerTime = this.time.now;
       });
+      const releaseScroll = () => {
+        this.dragStartY = undefined;
+        const clamped = Phaser.Math.Clamp(this.cardsC.y, -this.maxScroll, 0);
+        if (clamped !== this.cardsC.y) {
+          // released mid-overscroll: spring back to the edge instead of coasting
+          this.scrollVel = 0;
+          this.tweens.add({
+            targets: this.cardsC,
+            y: clamped,
+            duration: REDUCED_MOTION ? 1 : 260,
+            ease: 'Sine.easeOut',
+          });
+        }
+      };
+      this.input.on('pointerup', releaseScroll);
+      this.input.on('pointerupoutside', releaseScroll);
 
       // "more below" hint — a chunky wooden trail-marker button (same recipe as
       // iconButton: darker base + fill + top highlight), just not interactive
@@ -402,7 +431,15 @@ export default class MenuScene extends Phaser.Scene {
     setTimeout(() => input.focus(), 60);
   }
 
-  update(time) {
+  // pulls the target back toward the valid range with resistance, so dragging
+  // past either end still gives a little (like native rubber-band scrolling)
+  rubberBand(target) {
+    if (target > 0) return target * 0.35;
+    if (target < -this.maxScroll) return -this.maxScroll + (target + this.maxScroll) * 0.35;
+    return target;
+  }
+
+  update(time, delta) {
     const W = this.scale.width;
     for (const c of this.clouds) {
       c.s.x += c.v;
@@ -412,6 +449,14 @@ export default class MenuScene extends Phaser.Scene {
       this.hillFar.x = W / 2 + Math.sin(time * 0.00009) * 6;
       this.hillMid.x = W / 2 + Math.sin(time * 0.00013 + 2) * 4;
     }
+
+    // momentum: once the finger lifts, keep coasting and decay toward a stop
+    if (this.maxScroll > 0 && this.dragStartY === undefined && Math.abs(this.scrollVel) > 0.01) {
+      this.cardsC.y = Phaser.Math.Clamp(this.cardsC.y + this.scrollVel * delta, -this.maxScroll, 0);
+      this.scrollVel *= REDUCED_MOTION ? 0 : 0.92;
+      if (this.cardsC.y === 0 || this.cardsC.y === -this.maxScroll) this.scrollVel = 0;
+    }
+
     if (this.scrollHint) {
       this.scrollHint.setVisible(this.cardsC.y > -this.maxScroll + 12);
     }

@@ -1,5 +1,6 @@
 node_modules/
 dist/
+.vite/
 android/app/build/
 android/.gradle/
 android/local.properties

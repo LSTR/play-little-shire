@@ -16,19 +16,25 @@ function beep(freq, dur, type = 'sine', vol = 0.16, delay = 0) {
   if (!soundOn) return;
   try {
     ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
-    if (ctx.state === 'suspended') ctx.resume();
-    const t = ctx.currentTime + delay;
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = type;
-    osc.frequency.setValueAtTime(freq, t);
-    gain.gain.setValueAtTime(0, t);
-    gain.gain.linearRampToValueAtTime(vol, t + 0.012);
-    gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.start(t);
-    osc.stop(t + dur + 0.05);
+    const play = () => {
+      const t = ctx.currentTime + delay;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, t);
+      gain.gain.setValueAtTime(0, t);
+      gain.gain.linearRampToValueAtTime(vol, t + 0.012);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(t);
+      osc.stop(t + dur + 0.05);
+    };
+    // mobile browsers require the context to actually finish resuming — inside
+    // a user gesture — before any scheduled sound is audible; on desktop this
+    // race is forgiving enough to go unnoticed, on phones it plays silently
+    if (ctx.state === 'suspended') ctx.resume().then(play);
+    else play();
   } catch (e) {
     /* audio unavailable — play silently */
   }
